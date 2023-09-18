@@ -6,6 +6,7 @@ from .serializer import notebooksSerializer, bolalarSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
 # # Create your views here.
 
@@ -15,6 +16,11 @@ from rest_framework import generics
 class GetAllBolalar(generics.ListAPIView):
     queryset=Bolalar.objects.all()
     serializer_class=bolalarSerializer
+    permission_classes=(IsAuthenticated,)
+
+    def get_queryset(self):
+        print(self.request.user)
+        return Bolalar.objects.all()
 
 class GetDetailBolalar(generics.RetrieveAPIView):
     queryset = Bolalar.objects.all()
@@ -95,6 +101,11 @@ class AllFunctionBolalar(generics.RetrieveUpdateDestroyAPIView):
 class GetAllNotebooks(generics.ListAPIView):
     queryset=notebooks.objects.all()
     serializer_class=notebooksSerializer
+    permission_classes=(IsAuthenticated,)
+
+    def get_queryset(self):
+        print(self.request.user)
+        return notebooks.objects.all()
 
 
 
